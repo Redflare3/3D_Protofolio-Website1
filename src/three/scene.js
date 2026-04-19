@@ -17,7 +17,7 @@ document.body.appendChild(renderer.domElement);
 // Move camera to the right so 3D stays on right side
 camera.position.set(6, 0, 7);
 
-const geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
+const geometry = new THREE.TorusKnotGeometry(1.5, 0.7, 200, 24);
 const material = new THREE.MeshNormalMaterial();
 const mesh = new THREE.Mesh(geometry, material);
 mesh.position.set(6, 0, 0);
