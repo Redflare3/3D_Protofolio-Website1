@@ -27,9 +27,117 @@
   </head>
   <body class="bg-black text-white overflow-x-hidden">
     <!-- Navbar -->
+     <!-- Loading Screen -->
+<div id="loader" style="
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+">
+  <!-- Floating particles -->
+  <canvas id="loader-canvas" style="position: absolute; inset: 0; width: 100%; height: 100%;"></canvas>
+
+  <!-- Content -->
+  <div style="position: relative; z-index: 2; text-align: center;">
+
+    <!-- Spinning 3D-ish ring -->
+    <div style="position: relative; width: 120px; height: 120px; margin: 0 auto 2rem;">
+      <div id="ring1" style="
+        position: absolute; inset: 0;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: #a855f7;
+        border-bottom-color: #22d3ee;
+        animation: spin 1.2s linear infinite;
+      "></div>
+      <div id="ring2" style="
+        position: absolute; inset: 12px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-left-color: #ec4899;
+        border-right-color: #a855f7;
+        animation: spin 0.8s linear infinite reverse;
+      "></div>
+      <div id="ring3" style="
+        position: absolute; inset: 24px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: #22d3ee;
+        border-bottom-color: #ec4899;
+        animation: spin 1.6s linear infinite;
+      "></div>
+      <!-- Center dot -->
+      <div style="
+        position: absolute;
+        inset: 38px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #a855f7, #22d3ee);
+        animation: pulse 1.2s ease-in-out infinite;
+      "></div>
+    </div>
+
+    <!-- Name with glitch effect -->
+    <div id="loader-name" style="
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #a855f7, #22d3ee, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.15em;
+      animation: flicker 3s infinite;
+    ">SOLAR</div>
+
+    <p style="color: rgba(255,255,255,0.3); font-size: 0.75rem; letter-spacing: 0.4em; margin-bottom: 2.5rem;">
+      PORTFOLIO
+    </p>
+
+    <!-- Progress bar -->
+    <div style="width: 240px; height: 3px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; margin: 0 auto;">
+      <div id="loader-bar" style="
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(to right, #a855f7, #22d3ee, #ec4899);
+        border-radius: 999px;
+        transition: width 0.1s linear;
+        box-shadow: 0 0 12px #a855f7;
+      "></div>
+    </div>
+
+    <!-- Percentage -->
+    <p id="loader-pct" style="color: rgba(255,255,255,0.2); font-size: 0.75rem; margin-top: 0.75rem; font-family: monospace; letter-spacing: 0.1em;">0%</p>
+
+  </div>
+
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.85); opacity: 0.7; } }
+    @keyframes flicker { 0%, 95%, 100% { opacity: 1; } 96% { opacity: 0.4; } 97% { opacity: 1; } 98% { opacity: 0.2; } 99% { opacity: 1; } }
+    @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+  </style>
+</div>
+
+    <!-- Animated bar -->
+    <div style="width: 200px; height: 2px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden;">
+      <div id="loader-bar" style="
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(to right, #a855f7, #22d3ee);
+        border-radius: 999px;
+        transition: width 0.05s linear;
+      "></div>
+    </div>
+
+  <p style="color: rgba(255,255,255,0.3); font-size: 0.8rem; margin-top: 1rem; letter-spacing: 0.2em;">LOADING</p>
+</div>
   <nav class="fixed top-0 left-0 right-0 z-50 px-12 md:px-24 py-6 flex justify-between items-center glass">
-    <a href="#hero" class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
-      Aoki Jiro
+    <a href="#hero" class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+      Solar
     </a>
     <div class="flex gap-8 text-gray-400 text-sm">
       <a href="#hero" class="hover:text-white transition-colors">Home</a>
@@ -48,7 +156,7 @@
       <h1 class="text-6xl md:text-8xl font-bold leading-tight mb-6">
         Hi, I'm <br/>
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
-          Aoki Jiro
+          Solar
         </span>
       </h1>
       <p class="text-gray-400 text-xl md:text-2xl max-w-xl mb-10">
@@ -120,67 +228,83 @@
   <!-- Original cards -->
   <div class="min-w-[360px] border border-white/10 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 flex-shrink-0"
        style="background: rgba(0,0,0,0.4); backdrop-filter: blur(12px);">
-    <div class="w-full h-48 bg-gradient-to-br from-purple-900 to-cyan-900 rounded-xl mb-4"></div>
-    <h3 class="text-white font-bold text-xl mb-2">Project One</h3>
+    <div class="w-full h-48 bg-gradient-to-br from-purple-900 to-cyan-900 rounded-xl mb-4">
+      <img src="pic/3D_Portofolio.png" alt="3D Portfolio" class="w-full h-full object-cover rounded-xl">
+    </div>
+    <h3 class="text-white font-bold text-xl mb-2">3D Portfolio</h3>
     <p class="text-gray-400 text-sm mb-4">A cool web app built with JavaScript and Three.js.</p>
-    <a href="#" class="text-purple-400 text-sm hover:text-purple-300 transition-colors">View Project →</a>
+    <a href="https://github.com/Redflare3/3D_Protofolio-Website1" target="_blank" class="text-purple-400 text-sm hover:text-purple-300 transition-colors">View Project →</a>
   </div>
 
   <div class="min-w-[360px] border border-white/10 rounded-2xl p-6 hover:border-cyan-500/50 transition-all duration-300 flex-shrink-0"
        style="background: rgba(0,0,0,0.4); backdrop-filter: blur(12px);">
-    <div class="w-full h-48 bg-gradient-to-br from-cyan-900 to-pink-900 rounded-xl mb-4"></div>
-    <h3 class="text-white font-bold text-xl mb-2">Project Two</h3>
-    <p class="text-gray-400 text-sm mb-4">A full-stack app with Node.js and MongoDB.</p>
-    <a href="#" class="text-cyan-400 text-sm hover:text-cyan-300 transition-colors">View Project →</a>
+    <div class="w-full h-48 bg-gradient-to-br from-cyan-900 to-pink-900 rounded-xl mb-4">
+      <img src="pic/Portofolio1.png" alt="Portofolio Website" class="w-full h-full object-cover rounded-xl" >
+    </div>
+    <h3 class="text-white font-bold text-xl mb-2">Portofolio Website</h3>
+    <p class="text-gray-400 text-sm mb-4">A full-stack website with raw HTML, CSS, and JavaScript.</p>
+    <a href="https://protofolio-webiste1.vercel.app/" target="_blank" class="text-cyan-400 text-sm hover:text-cyan-300 transition-colors">View Project →</a>
   </div>
 
   <div class="min-w-[360px] border border-white/10 rounded-2xl p-6 hover:border-pink-500/50 transition-all duration-300 flex-shrink-0"
        style="background: rgba(0,0,0,0.4); backdrop-filter: blur(12px);">
-    <div class="w-full h-48 bg-gradient-to-br from-pink-900 to-purple-900 rounded-xl mb-4"></div>
-    <h3 class="text-white font-bold text-xl mb-2">Project Three</h3>
-    <p class="text-gray-400 text-sm mb-4">A creative 3D experience with GSAP animations.</p>
-    <a href="#" class="text-pink-400 text-sm hover:text-pink-300 transition-colors">View Project →</a>
+    <div class="w-full h-48 bg-gradient-to-br from-pink-900 to-purple-900 rounded-xl mb-4">
+      <img src="pic/2020Milkshake.png" alt="Creative 3D Experience" class="w-full h-full object-cover rounded-xl">
+    </div>
+    <h3 class="text-white font-bold text-xl mb-2">2020 Year Review</h3>
+    <p class="text-gray-400 text-sm mb-4">A creative physics experience with GSAP animations.</p>
+    <a href="https://2020.milkshake.studio/" target="_blank" class="text-pink-400 text-sm hover:text-pink-300 transition-colors">View Project →</a>
   </div>
 
   <div class="min-w-[360px] border border-white/10 rounded-2xl p-6 hover:border-amber-500/50 transition-all duration-300 flex-shrink-0"
        style="background: rgba(0,0,0,0.4); backdrop-filter: blur(12px);">
-    <div class="w-full h-48 bg-gradient-to-br from-amber-900 to-pink-900 rounded-xl mb-4"></div>
-    <h3 class="text-white font-bold text-xl mb-2">Project Four</h3>
-    <p class="text-gray-400 text-sm mb-4">A mobile-first design system built with Figma and CSS.</p>
-    <a href="#" class="text-amber-400 text-sm hover:text-amber-300 transition-colors">View Project →</a>
+    <div class="w-full h-48 bg-gradient-to-br from-amber-900 to-pink-900 rounded-xl mb-4">
+      <img src="pic/Tapalosa.png" alt="Design System" class="w-full h-full object-cover rounded-xl">
+    </div>
+    <h3 class="text-white font-bold text-xl mb-2">Tapalosa</h3>
+    <p class="text-gray-400 text-sm mb-4">a Mid-Market Real Estate Marketplace for Family Housing website.</p>
+    <a href="https://tapalosa-home-flow.base44.app" target="_blank" class="text-amber-400 text-sm hover:text-amber-300 transition-colors">View Project →</a>
   </div>
 
   <!-- Duplicate cards for seamless loop -->
   <div class="min-w-[360px] border border-white/10 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 flex-shrink-0"
        style="background: rgba(0,0,0,0.4); backdrop-filter: blur(12px);">
-    <div class="w-full h-48 bg-gradient-to-br from-purple-900 to-cyan-900 rounded-xl mb-4"></div>
-    <h3 class="text-white font-bold text-xl mb-2">Project One</h3>
+    <div class="w-full h-48 bg-gradient-to-br from-purple-900 to-cyan-900 rounded-xl mb-4">
+      <img src="pic/3D_Portofolio.png" alt="3D Portfolio" class="w-full h-full object-cover rounded-xl">
+    </div>
+    <h3 class="text-white font-bold text-xl mb-2">3D Portfolio</h3>
     <p class="text-gray-400 text-sm mb-4">A cool web app built with JavaScript and Three.js.</p>
-    <a href="#" class="text-purple-400 text-sm hover:text-purple-300 transition-colors">View Project →</a>
+    <a href="https://github.com/Redflare3/3D_Protofolio-Website1" target="_blank" class="text-purple-400 text-sm hover:text-purple-300 transition-colors">View Project →</a>
   </div>
 
   <div class="min-w-[360px] border border-white/10 rounded-2xl p-6 hover:border-cyan-500/50 transition-all duration-300 flex-shrink-0"
        style="background: rgba(0,0,0,0.4); backdrop-filter: blur(12px);">
-    <div class="w-full h-48 bg-gradient-to-br from-cyan-900 to-pink-900 rounded-xl mb-4"></div>
-    <h3 class="text-white font-bold text-xl mb-2">Project Two</h3>
-    <p class="text-gray-400 text-sm mb-4">A full-stack app with Node.js and MongoDB.</p>
-    <a href="#" class="text-cyan-400 text-sm hover:text-cyan-300 transition-colors">View Project →</a>
+    <div class="w-full h-48 bg-gradient-to-br from-cyan-900 to-pink-900 rounded-xl mb-4">
+      <img src="pic/Portofolio1.png" alt="Portofolio Website" class="w-full h-full object-cover rounded-xl" >
+    </div>
+    <h3 class="text-white font-bold text-xl mb-2">Portofolio Website</h3>
+    <p class="text-gray-400 text-sm mb-4">A full-stack website with raw HTML, CSS, and JavaScript.</p>
+    <a href="https://protofolio-webiste1.vercel.app/" target="_blank" class="text-cyan-400 text-sm hover:text-cyan-300 transition-colors">View Project →</a>
   </div>
 
   <div class="min-w-[360px] border border-white/10 rounded-2xl p-6 hover:border-pink-500/50 transition-all duration-300 flex-shrink-0"
        style="background: rgba(0,0,0,0.4); backdrop-filter: blur(12px);">
-    <div class="w-full h-48 bg-gradient-to-br from-pink-900 to-purple-900 rounded-xl mb-4"></div>
-    <h3 class="text-white font-bold text-xl mb-2">Project Three</h3>
-    <p class="text-gray-400 text-sm mb-4">A creative 3D experience with GSAP animations.</p>
-    <a href="#" class="text-pink-400 text-sm hover:text-pink-300 transition-colors">View Project →</a>
+    <div class="w-full h-48 bg-gradient-to-br from-pink-900 to-purple-900 rounded-xl mb-4">
+      <img src="pic/2020Milkshake.png" alt="Creative 3D Experience" class="w-full h-full object-cover rounded-xl">
+    </div>
+    <h3 class="text-white font-bold text-xl mb-2">2020 Year Review</h3>
+    <p class="text-gray-400 text-sm mb-4">A creative physics experience with GSAP animations.</p>
+    <a href="https://2020.milkshake.studio/" target="_blank" class="text-pink-400 text-sm hover:text-pink-300 transition-colors">View Project →</a>
   </div>
 
   <div class="min-w-[360px] border border-white/10 rounded-2xl p-6 hover:border-amber-500/50 transition-all duration-300 flex-shrink-0"
        style="background: rgba(0,0,0,0.4); backdrop-filter: blur(12px);">
-    <div class="w-full h-48 bg-gradient-to-br from-amber-900 to-pink-900 rounded-xl mb-4"></div>
-    <h3 class="text-white font-bold text-xl mb-2">Project Four</h3>
-    <p class="text-gray-400 text-sm mb-4">A mobile-first design system built with Figma and CSS.</p>
-    <a href="#" class="text-amber-400 text-sm hover:text-amber-300 transition-colors">View Project →</a>
+    <div class="w-full h-48 bg-gradient-to-br from-amber-900 to-pink-900 rounded-xl mb-4">
+      <img src="pic/Tapalosa.png" alt="Design System" class="w-full h-full object-cover rounded-xl">
+    </div>
+    <h3 class="text-white font-bold text-xl mb-2">Tapalosa</h3>
+    <p class="text-gray-400 text-sm mb-4">a Mid-Market Real Estate Marketplace for Family Housing website.</p>
+    <a href="https://tapalosa-home-flow.base44.app" target="_blank" class="text-amber-400 text-sm hover:text-amber-300 transition-colors">View Project →</a>
   </div>
 
 </div>
@@ -197,13 +321,12 @@
         <p class="text-gray-400 text-lg max-w-xl mb-10">
           Have a project in mind? I'd love to hear about it. Send me a message and let's create something amazing.
         </p>
-        <a href="mailto:your@email.com" class="px-10 py-4 bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 inline-block">
+        <a href="mailto:zaki.znf@gmail.com" class="px-10 py-4 bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 inline-block">
           Say Hello
         </a>
         <div class="flex gap-6 mt-12 text-gray-400 justify-center">
-          <a href="#" class="hover:text-white transition-colors">GitHub</a>
-          <a href="#" class="hover:text-white transition-colors">LinkedIn</a>
-          <a href="#" class="hover:text-white transition-colors">Twitter</a>
+          <a href="https://github.com/Redflare3" target="_blank" class="hover:text-white transition-colors">GitHub</a>
+          <a href="https://www.linkedin.com/in/aoki-jiro/" target="_blank" class="hover:text-white transition-colors">LinkedIn</a>
         </div>
       </div>
     </section>
@@ -211,7 +334,7 @@
     <script type="module" src="/src/main.js"></script>
 
 <script>
-  const btn = document.querySelector('a[href="mailto:your@email.com"]');
+  const btn = document.querySelector('a[href="mailto:zaki.znf@gmail.com"]');
 
   const ripple = document.createElement('div');
   ripple.style.cssText = `
@@ -279,6 +402,62 @@
       el.style.background = '';
     });
   });
+</script>
+<script>
+  const loader = document.getElementById('loader');
+  const bar = document.getElementById('loader-bar');
+  const pct = document.getElementById('loader-pct');
+  const canvas = document.getElementById('loader-canvas');
+  const ctx = canvas.getContext('2d');
+
+  // Particles
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const particles = Array.from({ length: 80 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2 + 0.5,
+    dx: (Math.random() - 0.5) * 0.6,
+    dy: (Math.random() - 0.5) * 0.6,
+    color: ['#a855f7', '#22d3ee', '#ec4899'][Math.floor(Math.random() * 3)],
+    opacity: Math.random() * 0.6 + 0.2,
+  }));
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color + Math.floor(p.opacity * 255).toString(16).padStart(2, '0');
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+    if (loader.style.visibility !== 'hidden') requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+
+  // Progress
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += Math.random() * 12;
+    if (progress >= 100) {
+      progress = 100;
+      bar.style.width = '100%';
+      pct.textContent = '100%';
+      clearInterval(interval);
+      setTimeout(() => {
+        loader.style.transition = 'opacity 1s ease, visibility 1s ease';
+        loader.style.opacity = '0';
+        loader.style.visibility = 'hidden';
+      }, 500);
+    } else {
+      bar.style.width = progress + '%';
+      pct.textContent = Math.floor(progress) + '%';
+    }
+  }, 120);
 </script>
   </body>
 </html>
