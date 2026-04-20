@@ -6,6 +6,9 @@
     <title>My Portfolio</title>
 
     <style>
+      body {
+      transition: background 1.2s ease, color 1.2s ease;
+      }
       .scrollbar-hide::-webkit-scrollbar {
       display: none;
       }
@@ -206,5 +209,76 @@
     </section>
 
     <script type="module" src="/src/main.js"></script>
+
+<script>
+  const btn = document.querySelector('a[href="mailto:your@email.com"]');
+
+  const ripple = document.createElement('div');
+  ripple.style.cssText = `
+    position: fixed;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ede9fe, #ddd6fe, #a78bfa, #7c3aed);
+    transform: scale(0);
+    pointer-events: none;
+    z-index: -1;
+    transition: transform 1.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+    opacity: 0;
+  `;
+  document.body.appendChild(ripple);
+
+  function positionRipple() {
+    const btnRect = btn.getBoundingClientRect();
+    const btnCenterX = btnRect.left + btnRect.width / 2;
+    const btnCenterY = btnRect.top + btnRect.height / 2;
+    const maxDist = Math.hypot(
+      Math.max(btnCenterX, window.innerWidth - btnCenterX),
+      Math.max(btnCenterY, window.innerHeight - btnCenterY)
+    );
+    const size = maxDist * 2.5;
+    ripple.style.width = size + 'px';
+    ripple.style.height = size + 'px';
+    ripple.style.left = (btnCenterX - size / 2) + 'px';
+    ripple.style.top = (btnCenterY - size / 2) + 'px';
+  }
+
+  btn.addEventListener('mouseenter', () => {
+    positionRipple();
+    ripple.style.opacity = '1';
+    ripple.style.transform = 'scale(1)';
+
+    // Make text dark and readable in light mode
+    document.body.style.color = '#1e1b4b';
+    document.querySelectorAll('h1, h2, h3, p, a').forEach(el => {
+      el.style.transition = 'color 0.6s ease';
+    });
+    document.querySelectorAll('.text-gray-400').forEach(el => {
+      el.style.color = '#4c1d95';
+    });
+    document.querySelectorAll('.glass').forEach(el => {
+      el.style.background = 'rgba(237, 233, 254, 0.6)';
+      el.style.border = '1px solid rgba(167, 139, 250, 0.5)';
+    });
+    document.querySelectorAll('.border-white\\/10').forEach(el => {
+      el.style.background = 'rgba(237, 233, 254, 0.5)';
+    });
+  });
+
+  btn.addEventListener('mouseleave', () => {
+    ripple.style.transform = 'scale(0)';
+    ripple.style.opacity = '0';
+
+    document.body.style.color = '';
+    document.querySelectorAll('.text-gray-400').forEach(el => {
+      el.style.color = '';
+    });
+    document.querySelectorAll('.glass').forEach(el => {
+      el.style.background = '';
+      el.style.border = '';
+    });
+    document.querySelectorAll('.border-white\\/10').forEach(el => {
+      el.style.background = '';
+    });
+  });
+</script>
   </body>
 </html>
